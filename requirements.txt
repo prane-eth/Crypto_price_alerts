@@ -1,0 +1,7 @@
+psycopg2-binary
+redis
+rq
+Flask
+pandas
+flask_sqlalchemy
+requests
