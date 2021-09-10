@@ -1,5 +1,7 @@
 
+import os
 import time
+import subprocess
 import hashlib
 from flask import Flask, request, render_template_string
 import pandas as pd
@@ -9,7 +11,7 @@ from send_email import send_email
 
 # postgres database is hosted on Heroku
 DB_URL = 'postgresql://miznhxqqdtwulp:9e61606a7a31c2e26ca389f5e76aa33ffd16e342f6d606e9f6874669f368e470' \
-        + '@ec2-44-196-146-152.compute-1.amazonaws.com:5432/d65rebcms2v45r'
+       + '@ec2-44-196-146-152.compute-1.amazonaws.com:5432/d65rebcms2v45r'
 
 app = Flask(__name__)
 app.secret_key = 'my_secret_key_1'
@@ -20,6 +22,9 @@ db = SQLAlchemy(app)
 from rq import Queue
 from redis_worker import conn  # local file
 q = Queue(connection=conn, default_timeout = 7200)
+
+subprocess.call(['python3', 'pinger.py'])
+subprocess.call(['python3', 'redis_worker.py'])
 
 
 class var:  # a class to store variables
@@ -59,7 +64,6 @@ class var:  # a class to store variables
                 + 'for {target_price}. <br> <b> Price is now {current_price} </b>' \
                 .format(currency=currency, target_price=target_price, new_price=new_price)
         # Send to queue
-        (send_email, email, subject, message)
         job = q.enqueue_call(
             func=send_email, args=(email, subject, message,),
             result_ttl=5000
@@ -87,26 +91,30 @@ def update():
     # /update/ url will be called by a background process at regular intervals of time
     var.prices_df = pd.read_json(var.PRICES_URL)  # get new prices
     df = var.prices_df  # current prices
+    notified_count = 0
     for row in var.alerts:
         print(row)
-        email = row['email']
-        currency = row['currency']
-        target_price = row['target_price']
-        targeted_for = row['targeted_for']
+        email = row[0]
+        currency = row[1]
+        target_price = row[2]
+        targeted_for = row[3]
         new_price = df.loc[df.symbol == currency]
         new_price = new_price.current_price.values[0]
         #
         if new_price == target_price:
             # alert for reaching target price
             var.send_alert(email, currency, target_price, new_price)
+            notified_count += 1
         elif targeted_for == 'increase' and new_price > target_price:
             # alert for increasing
             var.send_alert(email, currency, target_price, new_price)
+            notified_count += 1
         elif targeted_for == 'decrease' and new_price < target_price:
             # targeted for decreasing
             var.send_alert(email, currency, target_price, new_price)
+            notified_count += 1
     #
-    return 'Done'
+    return 'Notified: ' + str(notified_count)
 
 
 @app.route('/alerts/create/')
@@ -198,5 +206,9 @@ def prices():
 
 
 if __name__ == "__main__":
-    app.run(port=8080, debug=True)
+    try:
+        app.run(port=8080, debug=True)
+    except KeyboardInterrupt:
+        print('got a KeyboardInterrupt')  # after program ends
+        os.system('killall -9 python3')  # kill all started subprocesses
 

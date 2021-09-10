@@ -30,4 +30,4 @@ def send_email(recipient, email_subject, message):
     return True
 
 if __name__ == '__main__':
-    send_email('pkqrgqxsjfwws@affecting.org', 'Happy New Year', 'We love Outlook')
+    send_email('pkqrgqxsjfwws@affecting.org', 'Testing mail', 'We tested this code now')

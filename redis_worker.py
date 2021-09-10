@@ -2,7 +2,9 @@ import os
 
 import redis
 from rq import Worker, Queue, Connection
+from send_email import send_email
 
+print('started subprocess for redis worker')
 listen = ['default']
 
 redis_url = 'redis://:BJqBC9awpkqSOoJGohUNCLTtxoBQLVwY@redis-11039.c54.ap-northeast-1-2.ec2.cloud.redislabs.com:11039/myredis'
