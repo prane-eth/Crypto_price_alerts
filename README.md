@@ -2,33 +2,38 @@
 
 ## How to run the project:
 
-To install the requirements:
+To clone the repository: \
+`git clone https://github.com/vh-praneeth/Krypto_task` \
+`cd Krypto_task` to go to that directory
 
+To install the requirements: \
 `python3 -m pip install -r requirements.txt`
 
-To run the code:
+Before running the code: \
+execute `python3 redis_worker.py` in a new terminal and minimize the terminal \
+do the same with `python3 pinger.py`
 
+To run the code: \
 `python3 flask_app.py`
 
-It will automatically start the other processes which are required
+Note: API calls may be slow because of sending data to database. To increase the speed, kindly remove the lines which store data in DB. \
+Flask app start may be slow due to restoration of tables from the database.
 
-Note: API calls may be slow because of sending data to database. To increase the speed, kindly remove the lines which store data in DB.
 
-
-## Endpoints
+## API Endpoints
 
 `/alerts/create/` creates alert \
 `/alerts/delete/` deletes an alert \
 `/alerts/fetch/` fetches the alert history \
 `/signup/` to signup with email \
-`/update/` to check the new prices and send the alert to the users. This is made to be called by `pinger.py` \
+`/update/` to check the new prices and send the alert to the users. This is created to be called by `pinger.py` \
 `/coins/` to get list of coins \
 `/prices/` to get prices and details of all the coins
 
 
 ## API usage
 
-After http://127.0.0.1:8080/, add the following
+After http://127.0.0.1:8080, add the following
 
 `/signup/?email=abc@abc.com` to signup with email
 
@@ -48,17 +53,24 @@ After http://127.0.0.1:8080/, add the following
 ## My approach
 In the Python Flask app code, I created a class named `var` to store the variables. \
 I used Redis Online and Heroku's Postgresql for hosting them online. \
-The code creates a subprocess which starts Redis worker and a pinger to run in parallel.\
-Pinger loads /update/ of Flask app every 5 minutes. Flask app will then fetch the new prices of all the coins and sends alert to the users' email address.\
+Pinger loads `localhost:8080/update/` of Flask app every 5 minutes. Flask app will then fetch the new prices of all the coins and sends the alerts to the users' email address.\
 The file send_email.py contains the code required to send an email.
 
-All the tables are stored in Pandas DataFrame. When any dataframe is updated, database will be updated immediately. \
-When program starts, it restores the old data from the database.
+All the tables are stored in Pandas DataFrame. When any dataframe is updated, database will be updated immediately from the dataframe. It may cause delay. \
+When the program starts, it restores the old data from the database. It may cause delay.
 
-When there is an alert to be sent to the user, it is added to the Redis queue. Then `redis_worker.py` sends an email to the user.
-
+When there is an alert to be sent to the user, it is added to the Redis queue. Then `redis_worker.py` receives the task and sends an email to the user.
 
 
 ### Note
 I was not informed about the extension of deadline till 10 AM. I couldn't improve the code. \
 If you want to allow me to improve code or if you want any improvements, kindly send an email.
+
+
+## Screenshots
+Create ![Create](./screenshots/1_create.png)
+Signup ![Signup](./screenshots/2_signup.png)
+Delete ![Delete](./screenshots/3_delete.png)
+Fetch ![Fetch](./screenshots/4_fetch.png)
+Coins ![Coins](./screenshots/5_coins.png)
+Prices ![Prices](./screenshots/6_prices.png)
