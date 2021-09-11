@@ -55,7 +55,7 @@ In the URL after http://127.0.0.1:8080, add the following
 
 ## My approach
 In the Python Flask app code, I created a class named `var` to store the variables. \
-Pinger loads `localhost:8080/update/` of Flask app every 5 minutes. Flask app will then fetch the new prices of all the coins and sends the alerts to the users.\
+Pinger loads `localhost:8080/update/` of Flask app every 5 minutes. Flask app will then fetch the new prices of all the coins and sends the alerts to the users.
 
 When there is an alert to be sent to the user, it is added to the Redis queue. Then `redis_worker.py` receives the task and sends an email to the user.
 
