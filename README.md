@@ -64,6 +64,8 @@ When the program starts, it restores the old data from the database. It takes mo
 
 At any request, we find the email address using the access token.
 
+Access token is md5 hash of (emailID + timestamp). Timestamp is taken at the time of creation.
+
 ### How the code notifies using active alerts:
 When an alert is created, it compares the target price with the current price. It will decide whether the user wants to be notified about an increase or decrease in the price.
 
@@ -72,6 +74,7 @@ For each active alert entry, it checks the current prices of the given currency.
 If the new price is the same as the target price, the user gets notified.
 If the user has targeted for an increase and the new price is greater than the target price, the user gets notified.
 Or if the user has targeted for a decrease and the new price is less than the target price, the user gets notified.
+
 
 ### Note
 I was not informed about the extension of the deadline till 10 AM. I couldn't improve the code. \
