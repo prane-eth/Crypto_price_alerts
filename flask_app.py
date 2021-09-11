@@ -23,8 +23,8 @@ from rq import Queue
 from redis_worker import conn  # local file
 q = Queue(connection=conn, default_timeout = 7200)
 
-subprocess.call(['python3', 'pinger.py'])
-subprocess.call(['python3', 'redis_worker.py'])
+# subprocess.call(['python3', 'pinger.py'])
+# subprocess.call(['python3', 'redis_worker.py'])
 
 
 class var:  # a class to store variables
