@@ -61,16 +61,29 @@ When the program starts, it restores the old data from the database. It may caus
 
 When there is an alert to be sent to the user, it is added to the Redis queue. Then `redis_worker.py` receives the task and sends an email to the user.
 
+At any request, we find the email address using the access token.
+
+### How the code notifies using active alerts:
+When alert is created, it compares the target price with current price. It will decide whether the user wants to be notified about increase or decrease in the price.
+For each active alert entry, it checks the current prices of the given currency.
+If the new price is same as the target price, user gets notified.
+If the user targeted for increase and new price is greater than target price, user gets notified.
+Or if the user targeted for decrease and new price is less than the target price, user gets notified.
 
 ### Note
 I was not informed about the extension of deadline till 10 AM. I couldn't improve the code. \
-If you want to allow me to improve code or if you want any improvements, kindly send an email.
-
+If you want to allow me to improve code or if you want any improvements, kindly send an email. I gained experience during my internships with Python, Flask, and APIs.
 
 ## Screenshots
-Create ![Create](./screenshots/1_create.png)
-Signup ![Signup](./screenshots/2_signup.png)
-Delete ![Delete](./screenshots/3_delete.png)
-Fetch ![Fetch](./screenshots/4_fetch.png)
-Coins ![Coins](./screenshots/5_coins.png)
-Prices ![Prices](./screenshots/6_prices.png)
+### Create
+![Create](./screenshots/1_create.png)
+### Signup
+![Signup](./screenshots/2_signup.png)
+### Delete
+![Delete](./screenshots/3_delete.png)
+### Fetch
+![Fetch](./screenshots/4_fetch.png)
+### Coins
+![Coins](./screenshots/5_coins.png)
+### Prices
+![Prices](./screenshots/6_prices.png)
