@@ -77,8 +77,11 @@ Or if the user has targeted for a decrease and the new price is less than the ta
 
 
 ### Note
-I was not informed about the extension of the deadline till 10 AM. I couldn't improve the code. \
-If you want to allow me to improve the code or if you want any improvements, kindly send an email. I gained experience during my internship with Python, Flask, and APIs.
+I was not informed about the extension of the deadline till 10 AM. I couldn't improve the code. If you want any improvements in the code, kindly send an email. I gained experience during my internship with Python, Flask, and APIs.
+
+My details:  \
+Email: haripraneethv@gmail.com \
+College ID: 18BCE7147
 
 ## Screenshots
 ### Signup
