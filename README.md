@@ -1,9 +1,9 @@
-# Krypto_task
+# Crypto_price_alerts
 
 ## How to run the project:
 
 To clone the repository: \
-`git clone https://github.com/vh-praneeth/Krypto_task` \
+`git clone https://github.com/vh-praneeth/Crypto_price_alerts` \
 `cd Krypto_task` to go to that directory
 
 To install the requirements: \
