@@ -4,7 +4,7 @@
 
 To clone the repository: \
 `git clone https://github.com/vh-praneeth/Crypto_price_alerts` \
-`cd Krypto_task` to go to that directory
+`cd Crypto_price_alerts` to go to that directory
 
 To install the requirements: \
 `python3 -m pip install -r requirements.txt`
